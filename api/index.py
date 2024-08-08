@@ -5,25 +5,25 @@ import os
 import logging
 from dotenv import load_dotenv
 
-# 현재 파일의 디렉토리 경로
+# path CHECK
 current_dir = os.path.dirname(os.path.abspath(__file__))
 template_dir = os.path.join(current_dir, '../templates')
 
-# .env 파일 로드 (로컬 환경)
+# .env load
 load_dotenv(os.path.join(current_dir, '../.env'))
 
-# Flask 앱 초기화
+# Flask app init
 app = Flask(__name__, template_folder=template_dir)
-app.secret_key = os.getenv('SECRET_KEY')  # 세션을 위한 시크릿 키 설정
+app.secret_key = os.getenv('SECRET_KEY') 
 
-# 로깅 설정
+# logging
 logging.basicConfig(level=logging.INFO)
 
-# 환경 변수가 제대로 로드되었는지 확인
+# env. variables CHECK
 app.logger.info(f"SECRET_KEY: {os.getenv('SECRET_KEY')}")
 app.logger.info(f"LOGIN_PASSWORD: {os.getenv('LOGIN_PASSWORD')}")
 
-# 데이터베이스 초기화
+# DB init
 def init_db():
     try:
         db_path = os.path.join(current_dir, 'schedule.db')
@@ -40,7 +40,7 @@ def init_db():
     except Exception as e:
         app.logger.error(f"Error initializing database: {e}")
 
-# 날짜 생성 함수
+# day creating
 def generate_dates():
     today = datetime.today()
     start_this_week = today - timedelta(days=today.weekday())
@@ -51,7 +51,7 @@ def generate_dates():
 
     return this_week_dates, next_week_dates
 
-# 홈페이지 라우트
+# home route
 @app.route('/')
 def index():
     try:
@@ -72,7 +72,7 @@ def index():
         app.logger.error(f"Error in index route: {e}")
         return "Internal Server Error", 500
 
-# 비밀번호 입력 페이지 라우트
+# login route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -89,7 +89,7 @@ def login():
             return render_template('login.html', error=error)
     return render_template('login.html')
 
-# 일정 입력 라우트
+# update route
 @app.route('/update', methods=['GET', 'POST'])
 def update():
     if not session.get('logged_in'):
@@ -119,15 +119,14 @@ def update():
 
 # Vercel Serverless Function entry point
 def handler(request, context):
-    init_db()  # Initialize the database
+    init_db()  
     return app
 
-# init_db()를 서버리스 함수에서도 초기화
+# init_db() serverless function entry point
 init_db()
 
-
-# # internal server TEST
-# if __name__ == '__main__':
-#     init_db()
-#     app.run(host='127.0.0.1', port=8000, debug=True)
-
+# main 
+if __name__ == '__main__':
+    init_db()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
