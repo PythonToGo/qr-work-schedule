@@ -71,6 +71,9 @@ def login():
 # Update route
 @app.route('/update', methods=['GET', 'POST'])
 def update():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    
     this_week_dates, next_week_dates = generate_dates()
     days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 
@@ -89,4 +92,4 @@ def update():
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=True, host='0.0.0.0', port=8000)
+    app.run(debug=True)
