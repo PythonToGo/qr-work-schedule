@@ -1,6 +1,3 @@
 Flask
 qrcode[pil]
 Pillow
-
-
-# npm install -g vercel
