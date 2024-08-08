@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Schedule</title>
+</head>
+<body>
+    <h1>Weekly Schedule for Taehyoung</h1>
+    <h2>This Week</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Day of Week</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+            </tr>
+            <tr>
+                <th>Day</th>
+                {% for day in this_week_dates %}
+                <th>{{ day }}</th>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th>State</th>
+                {% for status in this_week_status %}
+                <th>{{ status }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+    </table>
+
+    <h2>Next Week (Plan)</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Day of Week</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+            </tr>
+            <tr>
+                <th>Day</th>
+                {% for day in next_week_dates %}
+                <th>{{ day }}</th>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th>State</th>
+                {% for status in next_week_status %}
+                <th>{{ status }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+    </table>
+    <br>
+    <a href="/login">Update Schedule</a>
+</body>
+<footer>© 2024 Taey </footer>
+</html>

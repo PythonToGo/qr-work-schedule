@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Schedule</title>
+</head>
+<body>
+    <h1>Update Schedule</h1>
+    <form method="post">
+        <h2>This Week</h2>
+        {% for day, date in zip(days, this_week_dates) %}
+        <label for="this_week_{{ day }}">{{ date }}. {{ day }}:</label>
+        <select id="this_week_{{ day }}" name="this_week_{{ day }}">
+            <option value="Office">Office</option>
+            <option value="Home">Home</option>
+            <option value="Undecided">Undecided</option>
+        </select><br>
+        {% endfor %}
+        <h2>Next Week (Plan)</h2>
+        {% for day, date in zip(days, next_week_dates) %}
+        <label for="next_week_{{ day }}">{{ date }}. {{ day }}:</label>
+        <select id="next_week_{{ day }}" name="next_week_{{ day }}">
+            <option value="Office">Office</option>
+            <option value="Home">Home</option>
+            <option value="Undecided">Undecided</option>
+        </select><br>
+        {% endfor %}
+        <input type="submit" value="Update">
+    </form>
+</body>
+<footer>© 2024 Taey </footer>
+</html>
