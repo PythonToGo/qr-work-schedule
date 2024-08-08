@@ -1,4 +1,11 @@
-# venv
+
+__pycache__/
+*.pyc
+*.pyo
+
+# env
+.env
 qrauto/
+
+# image
 qrcode.png
-.vercel
