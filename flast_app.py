@@ -3,9 +3,9 @@ import sqlite3
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
-app.secret_key = '123' 
+app.secret_key = '123'  
 
-# initialize database
+# initialize DB
 def init_db():
     with sqlite3.connect('schedule.db') as conn:
         conn.execute('''
@@ -17,7 +17,7 @@ def init_db():
         )''')
         conn.commit()
 
-# date creation function
+# Day create
 def generate_dates():
     today = datetime.today()
     start_this_week = today - timedelta(days=today.weekday())
@@ -28,19 +28,7 @@ def generate_dates():
 
     return this_week_dates, next_week_dates
 
-# # date creation function (for TEST)
-# def generate_dates():
-#     # Today is August 30, 2024
-#     today = datetime(2024, 8, 30)
-#     start_this_week = today - timedelta(days=today.weekday())
-#     start_next_week = start_this_week + timedelta(days=7)
-
-#     this_week_dates = [(start_this_week + timedelta(days=i)).day for i in range(5)]
-#     next_week_dates = [(start_next_week + timedelta(days=i)).day for i in range(5)]
-
-#     return this_week_dates, next_week_dates
-
-# Home route
+# homw route
 @app.route('/')
 def index():
     with sqlite3.connect('schedule.db') as conn:
@@ -55,12 +43,12 @@ def index():
     return render_template('index.html', this_week_status=this_week_status, next_week_status=next_week_status,
                            this_week_dates=this_week_dates, next_week_dates=next_week_dates)
 
-# Login route
+# login route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         password = request.form['password']
-        if password == '123': 
+        if password == '123':  
             session['logged_in'] = True
             return redirect(url_for('update'))
         else:
@@ -68,7 +56,7 @@ def login():
             return render_template('login.html', error=error)
     return render_template('login.html')
 
-# Update route
+# update route
 @app.route('/update', methods=['GET', 'POST'])
 def update():
     if not session.get('logged_in'):
